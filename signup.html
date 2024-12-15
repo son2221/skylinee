@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - SKYLINE</title>
+  <style>
+    /* Basic Styles (can reuse your existing styles) */
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .form-container {
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      background: white;
+    }
+
+    .form-container h2 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .form-container input {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .form-container button {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .form-container button:hover {
+      background-color: #45a049;
+    }
+
+    .form-container .link {
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Sign Up</h2>
+    <form id="signup-form">
+      <input type="email" id="signup-email" placeholder="Enter your email" required />
+      <button type="submit">Send OTP</button>
+    </form>
+    <p class="link">Already have an account? <a href="login.html">Login here</a></p>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    emailjs.init("rZH7-84GFlkjz7VxU");
+
+    document.getElementById("signup-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const email = document.getElementById("signup-email").value;
+      if (!email) {
+        alert("Please enter a valid email.");
+        return;
+      }
+
+      const otp = Math.floor(100000 + Math.random() * 900000);  // Generate OTP
+
+      const templateParams = { to_email: email, otp: otp };
+
+      emailjs.send("service_asdsvzz", "template_pm59agp", templateParams)
+        .then(function(response) {
+          alert("OTP sent to your email.");
+          localStorage.setItem("otp", otp);
+          window.location.href = "otp.html?mode=signup";  // Redirect to OTP page for verification
+        }, function(error) {
+          console.log("Error:", error);
+          alert("Failed to send OTP. Please try again later.");
+        });
+    });
+  </script>
+</body>
+</html>
