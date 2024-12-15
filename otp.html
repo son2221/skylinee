@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTP Verification - SKYLINE</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .form-container {
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      background: white;
+      text-align: center;
+    }
+
+    .form-container h2 {
+      margin-bottom: 20px;
+    }
+
+    .form-container input {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .form-container button {
+      background-color: #4caf50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .form-container button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Enter OTP</h2>
+    <form id="otp-form">
+      <input type="text" id="otp" placeholder="Enter OTP" required />
+      <button type="submit">Verify OTP</button>
+    </form>
+  </div>
+
+  <script>
+    // Get mode from URL query
+    const mode = new URLSearchParams(window.location.search).get("mode");
+
+    document.getElementById("otp-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const enteredOtp = document.getElementById("otp").value;
+      const storedOtp = localStorage.getItem("otp");
+
+      if (enteredOtp === storedOtp) {
+        if (mode === "signup") {
+          alert("Sign-up successful!");
+          // Redirect to the main app or dashboard
+          window.location.href = "dashboard.html";
+        } else if (mode === "login") {
+          alert("Login successful!");
+          // Redirect to the dashboard or main page
+          window.location.href = "dashboard.html";
+        }
+      } else {
+        alert("Invalid OTP, please try again.");
+      }
+    });
+  </script>
+</body>
+</html>
